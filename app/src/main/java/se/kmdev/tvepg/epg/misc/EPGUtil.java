@@ -4,14 +4,15 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.picasso.OkHttpDownloader;
+import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
+import okhttp3.OkHttpClient;
 
 /**
  * Created by Kristoffer.
@@ -42,7 +43,7 @@ public class EPGUtil {
     private static void initPicasso(Context context) {
         if (picasso == null) {
             picasso = new Picasso.Builder(context)
-                    .downloader(new OkHttpDownloader(new OkHttpClient()))
+                    .downloader(new OkHttp3Downloader(new OkHttpClient()))
                     .listener(new Picasso.Listener() {
                         @Override
                         public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
