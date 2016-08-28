@@ -45,7 +45,7 @@ public class EPGChannel implements Parcelable {
         this.language = language;
     }
 
-    protected EPGChannel(Parcel in) {
+    public EPGChannel(Parcel in) {
         channelID = in.readString();
         name = in.readString();
         imageURL = in.readString();

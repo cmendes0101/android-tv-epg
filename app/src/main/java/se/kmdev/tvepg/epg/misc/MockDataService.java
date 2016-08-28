@@ -17,8 +17,8 @@ import se.kmdev.tvepg.epg.domain.EPGEvent;
  */
 public class MockDataService {
 
-    public static final int DAYS_BACK_MILLIS = 3 * 24 * 60 * 60 * 1000;        // 3 days
-    public static final int DAYS_FORWARD_MILLIS = 3 * 24 * 60 * 60 * 1000;     // 3 days
+    private static final int DAYS_BACK_MILLIS = 3 * 24 * 60 * 60 * 1000;        // 3 days
+    private static final int DAYS_FORWARD_MILLIS = 3 * 24 * 60 * 60 * 1000;     // 3 days
 
     private static Random rand = new Random();
     private static List<Integer> availableEventLength = Lists.newArrayList(
@@ -53,7 +53,7 @@ public class MockDataService {
         long nowMillis = System.currentTimeMillis();
 
         for (int i=0 ; i < 20 ; i++) {
-            EPGChannel epgChannel = new EPGChannel();
+            EPGChannel epgChannel = new EPGChannel(null);
             epgChannel.setImageURL(availableChannelLogos.get(i % 5));
             epgChannel.setChannelID(Integer.toString(i));
             epgChannel.setName("Channel " + (i+1));
@@ -74,7 +74,7 @@ public class MockDataService {
 
         while (currentTime <= epgEnd) {
             long eventEnd = getEventEnd(currentTime);
-            EPGEvent epgEvent = new EPGEvent();
+            EPGEvent epgEvent = new EPGEvent(null);
             epgEvent.setTitle(availableEventTitles.get(randomBetween(0, 6)));
             epgEvent.setStart(currentTime);
             epgEvent.setEnd(eventEnd);
