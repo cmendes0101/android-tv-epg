@@ -77,6 +77,10 @@ public class EPGEvent implements Parcelable {
         this.episodeNumber = episodeNumber;
     }
 
+    public EPGEvent() {
+
+    }
+
     public EPGEvent(Parcel in) {
         start = in.readLong();
         end = in.readLong();

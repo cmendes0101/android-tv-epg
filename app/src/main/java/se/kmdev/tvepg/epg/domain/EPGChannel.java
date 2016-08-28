@@ -45,6 +45,10 @@ public class EPGChannel implements Parcelable {
         this.language = language;
     }
 
+    public EPGChannel() {
+
+    }
+
     public EPGChannel(Parcel in) {
         channelID = in.readString();
         name = in.readString();
