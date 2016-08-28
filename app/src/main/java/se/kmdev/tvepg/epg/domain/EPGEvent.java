@@ -1,9 +1,12 @@
 package se.kmdev.tvepg.epg.domain;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Kristoffer.
  */
-public class EPGEvent {
+public class EPGEvent implements Parcelable {
 
     private long start;
     private long end;
@@ -75,4 +78,43 @@ public class EPGEvent {
     }
 
 
+
+    protected EPGEvent(Parcel in) {
+        start = in.readLong();
+        end = in.readLong();
+        title = in.readString();
+        imageURL = in.readString();
+        description = in.readString();
+        episodeSeason = in.readInt();
+        episodeNumber = in.readInt();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(start);
+        dest.writeLong(end);
+        dest.writeString(title);
+        dest.writeString(imageURL);
+        dest.writeString(description);
+        dest.writeInt(episodeSeason);
+        dest.writeInt(episodeNumber);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<EPGEvent> CREATOR = new Parcelable.Creator<EPGEvent>() {
+        @Override
+        public EPGEvent createFromParcel(Parcel in) {
+            return new EPGEvent(in);
+        }
+
+        @Override
+        public EPGEvent[] newArray(int size) {
+            return new EPGEvent[size];
+        }
+    };
 }

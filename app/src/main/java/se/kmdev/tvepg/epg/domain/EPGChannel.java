@@ -1,9 +1,12 @@
 package se.kmdev.tvepg.epg.domain;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Kristoffer.
  */
-public class EPGChannel {
+public class EPGChannel implements Parcelable {
 
     private String channelID;
     private String name;
@@ -41,4 +44,37 @@ public class EPGChannel {
     public void setLanguage(String language) {
         this.language = language;
     }
+
+    protected EPGChannel(Parcel in) {
+        channelID = in.readString();
+        name = in.readString();
+        imageURL = in.readString();
+        language = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(channelID);
+        dest.writeString(name);
+        dest.writeString(imageURL);
+        dest.writeString(language);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<EPGChannel> CREATOR = new Parcelable.Creator<EPGChannel>() {
+        @Override
+        public EPGChannel createFromParcel(Parcel in) {
+            return new EPGChannel(in);
+        }
+
+        @Override
+        public EPGChannel[] newArray(int size) {
+            return new EPGChannel[size];
+        }
+    };
 }
