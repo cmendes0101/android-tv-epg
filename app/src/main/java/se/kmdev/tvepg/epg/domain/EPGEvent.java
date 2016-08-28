@@ -16,7 +16,7 @@ public class EPGEvent implements Parcelable {
     private int episodeSeason;
     private int episodeNumber;
     private Boolean newEpisode;
-    private String programTitle;
+    private String episodeTitle;
     private String ratings;
 
     public long getStart() {
@@ -96,12 +96,12 @@ public class EPGEvent implements Parcelable {
         this.newEpisode = newEpisode;
     }
 
-    public String getProgramTitle() {
-        return programTitle;
+    public String getEpisodeTitle() {
+        return episodeTitle;
     }
 
-    public void setProgramTitle(String programTitle) {
-        this.programTitle = programTitle;
+    public void setEpisodeTitle(String episodeTitle) {
+        this.episodeTitle = episodeTitle;
     }
 
     public EPGEvent() {
@@ -118,7 +118,7 @@ public class EPGEvent implements Parcelable {
         episodeNumber = in.readInt();
         byte newEpisodeVal = in.readByte();
         newEpisode = newEpisodeVal == 0x02 ? null : newEpisodeVal != 0x00;
-        programTitle = in.readString();
+        episodeTitle = in.readString();
         ratings = in.readString();
     }
 
@@ -141,7 +141,7 @@ public class EPGEvent implements Parcelable {
         } else {
             dest.writeByte((byte) (newEpisode ? 0x01 : 0x00));
         }
-        dest.writeString(programTitle);
+        dest.writeString(episodeTitle);
         dest.writeString(ratings);
     }
 
