@@ -17,6 +17,9 @@ import se.kmdev.tvepg.epg.domain.EPGEvent;
  */
 public class MockDataService {
 
+    public static final int DAYS_BACK_MILLIS = 3 * 24 * 60 * 60 * 1000;        // 3 days
+    public static final int DAYS_FORWARD_MILLIS = 3 * 24 * 60 * 60 * 1000;     // 3 days
+
     private static Random rand = new Random();
     private static List<Integer> availableEventLength = Lists.newArrayList(
             1000*60*15,  // 15 minutes
@@ -64,8 +67,8 @@ public class MockDataService {
     private static List<EPGEvent> createEvents(EPGChannel epgChannel, long nowMillis) {
         List<EPGEvent> result = Lists.newArrayList();
 
-        long epgStart = nowMillis - EPG.DAYS_BACK_MILLIS;
-        long epgEnd = nowMillis + EPG.DAYS_FORWARD_MILLIS;
+        long epgStart = nowMillis - DAYS_BACK_MILLIS;
+        long epgEnd = nowMillis + DAYS_FORWARD_MILLIS;
 
         long currentTime = epgStart;
 
