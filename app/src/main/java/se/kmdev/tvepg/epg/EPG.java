@@ -36,10 +36,10 @@ import se.kmdev.tvepg.epg.misc.EPGUtil;
 public class EPG extends ViewGroup {
 
     public final String TAG = getClass().getSimpleName();
-    public static final int DAYS_BACK_MILLIS = 3 * 24 * 60 * 60 * 1000;        // 3 days
-    public static final int DAYS_FORWARD_MILLIS = 3 * 24 * 60 * 60 * 1000;     // 3 days
-    public static final int HOURS_IN_VIEWPORT_MILLIS = 2 * 60 * 60 * 1000;     // 2 hours
-    public static final int TIME_LABEL_SPACING_MILLIS = 30 * 60 * 1000;        // 30 minutes
+    public int mMillisDaysBack = 3 * 24 * 60 * 60 * 1000;        // 3 days
+    public int mMillisDaysForward = 3 * 24 * 60 * 60 * 1000;     // 3 days
+    public int mMillisInViewort = 2 * 60 * 60 * 1000;     // 2 hours
+    public int mMillisTimeLabelSpacing = 30 * 60 * 1000;        // 30 minutes
 
     private final Rect mClipRect;
     private final Rect mDrawingRect;
@@ -227,11 +227,11 @@ public class EPG extends ViewGroup {
         mPaint.setColor(mEventLayoutTextColor);
         mPaint.setTextSize(mTimeBarTextSize);
 
-        for (int i = 0; i < HOURS_IN_VIEWPORT_MILLIS / TIME_LABEL_SPACING_MILLIS; i++) {
+        for (int i = 0; i < mMillisInViewort / mMillisTimeLabelSpacing; i++) {
             // Get time and round to nearest half hour
-            final long time = TIME_LABEL_SPACING_MILLIS *
-                    (((mTimeLowerBoundary + (TIME_LABEL_SPACING_MILLIS * i)) +
-                            (TIME_LABEL_SPACING_MILLIS / 2)) / TIME_LABEL_SPACING_MILLIS);
+            final long time = mMillisTimeLabelSpacing *
+                    (((mTimeLowerBoundary + (mMillisTimeLabelSpacing * i)) +
+                            (mMillisTimeLabelSpacing / 2)) / mMillisTimeLabelSpacing);
 
             canvas.drawText(EPGUtil.getShortTime(time),
                     getXFrom(time),
@@ -446,7 +446,7 @@ public class EPG extends ViewGroup {
     }
 
     private long calculatedBaseLine() {
-        return LocalDateTime.now().toDateTime().minusMillis(DAYS_BACK_MILLIS).getMillis();
+        return LocalDateTime.now().toDateTime().minusMillis(mMillisDaysBack).getMillis();
     }
 
     private int getFirstVisibleChannelPosition() {
@@ -477,7 +477,7 @@ public class EPG extends ViewGroup {
     }
 
     private void calculateMaxHorizontalScroll() {
-        mMaxHorizontalScroll = (int) ((DAYS_BACK_MILLIS + DAYS_FORWARD_MILLIS - HOURS_IN_VIEWPORT_MILLIS) / mMillisPerPixel);
+        mMaxHorizontalScroll = (int) ((mMillisDaysBack + mMillisDaysForward - mMillisInViewort) / mMillisPerPixel);
     }
 
     private void calculateMaxVerticalScroll() {
@@ -501,11 +501,11 @@ public class EPG extends ViewGroup {
     }
 
     private long calculateMillisPerPixel() {
-        return HOURS_IN_VIEWPORT_MILLIS / (getResources().getDisplayMetrics().widthPixels - mChannelLayoutWidth - mChannelLayoutMargin);
+        return mMillisInViewort / (getResources().getDisplayMetrics().widthPixels - mChannelLayoutWidth - mChannelLayoutMargin);
     }
 
     private int getXPositionStart() {
-        return getXFrom(System.currentTimeMillis() - (HOURS_IN_VIEWPORT_MILLIS / 2));
+        return getXFrom(System.currentTimeMillis() - (mMillisInViewort / 2));
     }
 
     private void resetBoundaries() {
@@ -697,5 +697,21 @@ public class EPG extends ViewGroup {
             }
             return true;
         }
+    }
+
+    public void setMillisDaysBack(int millis) {
+        mMillisDaysBack = millis;
+    }
+
+    public void setMillisDaysForward(int millis) {
+        mMillisDaysForward = millis;
+    }
+
+    public void setMillisInViewort(int millis) {
+        mMillisInViewort = millis;
+    }
+
+    public void setMillisTimeLabelSpacing(int millis) {
+        mMillisTimeLabelSpacing = millis;
     }
 }
