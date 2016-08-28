@@ -50,8 +50,10 @@ public class MockDataService {
         long nowMillis = System.currentTimeMillis();
 
         for (int i=0 ; i < 20 ; i++) {
-            EPGChannel epgChannel = new EPGChannel(availableChannelLogos.get(i % 5),
-                    "Channel " + (i+1), Integer.toString(i));
+            EPGChannel epgChannel = new EPGChannel();
+            epgChannel.setImageURL(availableChannelLogos.get(i % 5));
+            epgChannel.setChannelID(Integer.toString(i));
+            epgChannel.setName("Channel " + (i+1));
 
             result.put(epgChannel, createEvents(epgChannel, nowMillis));
         }
@@ -69,7 +71,10 @@ public class MockDataService {
 
         while (currentTime <= epgEnd) {
             long eventEnd = getEventEnd(currentTime);
-            EPGEvent epgEvent = new EPGEvent(currentTime, eventEnd, availableEventTitles.get(randomBetween(0, 6)));
+            EPGEvent epgEvent = new EPGEvent();
+            epgEvent.setTitle(availableEventTitles.get(randomBetween(0, 6)));
+            epgEvent.setStart(currentTime);
+            epgEvent.setEnd(eventEnd);
             result.add(epgEvent);
             currentTime = eventEnd;
         }
