@@ -542,6 +542,7 @@ public class EPG extends ViewGroup {
     }
 
     private int getChannelPosition(int y) {
+        if (epgData == null) { return 0; }
         y -= mTimeBarHeight;
         int channelPosition = (y + mChannelLayoutMargin)
                 / (mChannelLayoutHeight + mChannelLayoutMargin);

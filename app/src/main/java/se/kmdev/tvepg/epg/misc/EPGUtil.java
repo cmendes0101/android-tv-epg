@@ -12,6 +12,8 @@ import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.util.Locale;
+
 import okhttp3.OkHttpClient;
 
 /**
@@ -19,7 +21,7 @@ import okhttp3.OkHttpClient;
  */
 public class EPGUtil {
     private static final String TAG = "EPGUtil";
-    private static final DateTimeFormatter dtfShortTime = DateTimeFormat.forPattern("HH:mm");
+    //private static final DateTimeFormatter dtfShortTime = DateTimeFormat.mediumTime().withLocale( Locale.getDefault() );
     private static Picasso picasso = null;
 
     public static String getShortTime(long timeMillis) {
@@ -47,7 +49,7 @@ public class EPGUtil {
                     .listener(new Picasso.Listener() {
                         @Override
                         public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
-                            Log.e(TAG, exception.getMessage());
+                            Log.e(TAG, "Failed to load image: " + exception.getMessage());
                         }
                     })
                     .build();
